@@ -47,7 +47,8 @@ function buildArch() {
 
 	mkdir -p $DIST_DIR/libs/$1
 	cp bazel-bin/tensorflow/lite/libtensorflowlite.so $DIST_DIR/libs/$1/
-	cp bazel-bin/tensorflow/lite/libtensorflowlite_gpu_gl.so $DIST_DIR/libs/$1/
+
+	cp bazel-bin/tensorflow/lite/delegates/gpu/libtensorflowlite_gpu_gl.so $DIST_DIR/libs/$1/
 }
 
 ARCHS=("android_arm64" "android_arm" "android_x86_64" "android_x86")
