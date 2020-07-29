@@ -46,7 +46,7 @@ function buildArch() {
 	cd $TF_DIR
 
 	bazel build //tensorflow/lite:libtensorflowlite.so --config=$1 --cxxopt='--std=c++11' -c opt
-	bazel build //tensorflow/lite/c:libtensorflowlite_c.so --config=android_arm64 -c opt
+	bazel build //tensorflow/lite/c:libtensorflowlite_c.so --config=$1 -c opt
 	bazel build //tensorflow/lite/delegates/gpu:libtensorflowlite_gpu_gl.so -c opt --config $1 --copt -Os --copt -DTFLITE_GPU_BINARY_RELEASE --copt -s --strip always
 
 	mkdir -p $DIST_DIR/libs/$1
