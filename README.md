@@ -14,7 +14,7 @@ Has 3 dynamic libs:
 1. `libtensorflowlite_gpu_gl.so` - The C++ GPU delegate library
 
 ## iOS
-Has only 1 static C++ library: `libtensorflow-lite.a`
+Library is built as a framework for all architectures, contains the framework folder: `TensorFlowLiteC.framework`
 
 ## Windows
 Has 1 C lib and dll (`tensorflowlite_c.dll.if.lib`, `tensorflowlite_c.dll`)
