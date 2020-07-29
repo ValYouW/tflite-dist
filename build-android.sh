@@ -44,13 +44,15 @@ function collectHeaders() {
 function buildArch() {
 	log "Building for $1"
 	cd $TF_DIR
-	bazel build //tensorflow/lite:libtensorflowlite.so --config=$1 --cxxopt='--std=c++11' -c opt
 
-	bazel build -c opt --config $1 --copt -Os --copt -DTFLITE_GPU_BINARY_RELEASE --copt -s --strip always //tensorflow/lite/delegates/gpu:libtensorflowlite_gpu_gl.so
+	bazel build //tensorflow/lite:libtensorflowlite.so --config=$1 --cxxopt='--std=c++11' -c opt
+	bazel build //tensorflow/lite/c:libtensorflowlite_c.so --config=android_arm64 -c opt
+	bazel build //tensorflow/lite/delegates/gpu:libtensorflowlite_gpu_gl.so -c opt --config $1 --copt -Os --copt -DTFLITE_GPU_BINARY_RELEASE --copt -s --strip always
 
 	mkdir -p $DIST_DIR/libs/$1
-	cp bazel-bin/tensorflow/lite/libtensorflowlite.so $DIST_DIR/libs/$1/
 
+	cp bazel-bin/tensorflow/lite/libtensorflowlite.so $DIST_DIR/libs/$1/
+	cp bazel-bin/tensorflow/lite/c/libtensorflowlite_c.so $DIST_DIR/libs/$1/
 	cp bazel-bin/tensorflow/lite/delegates/gpu/libtensorflowlite_gpu_gl.so $DIST_DIR/libs/$1/
 }
 
