@@ -5,10 +5,12 @@ These are notes on how tflite-dist is prepared.
 The build for Android is done using the `build-android.sh` script. It has to run on Linux machine (WSL is OK) that was configured for Tensorflow Android builds.
 Can check [this](https://www.thecodingnotebook.com/2019/11/building-tensorflow-lite-for-android-on.html) blog post.
 
+The script will build the C, C++ libraries and the GPU delegate.
+
 This script will also gather all the `include` files for `tflite-dist` (include files are the same for all platforms).
 
 # iOS
-Building the ios framework should be done on a configured mac machine, instructions are per Tensorflow Lite [instructions](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/guide/build_ios.md)
+Building the C ios framework should be done on a configured mac machine, instructions are per Tensorflow Lite [instructions](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/guide/build_ios.md)
 
 Then the build command is:
 ```
