@@ -20,11 +20,16 @@ bazel build --config=ios_fat -c opt \
 Building for windows requires a machine with Python, Numpy and a supported version of Bazel,
 the supported version can be found under in the tensorflow repository under `.bazelversion` file.
 
-Then to build, from git bash:
+Then to build the C library, from git bash:
 ```
 cd [tensorflow-root-repo]
 git checkot [wanted tag]
 python configure.py
 ./tensorflow/lite/tools/make/download_dependencies.sh
 bazel build //tensorflow/lite/c:tensorflowlite_c.dll -c opt
+```
+
+One can also build the C++ library, but due to its size it is not included in tflite-dist, the build command is:
+```
+bazel build //tensorflow/lite:tensorflowlite.dll -c opt
 ```
