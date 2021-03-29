@@ -42,21 +42,24 @@ function collectHeaders() {
 }
 
 function buildArch() {
-	log "Building for $1"
+	log "Building for $1 --> $2"
 	cd $TF_DIR
 
 	bazel build //tensorflow/lite:libtensorflowlite.so --config=$1 --cxxopt='--std=c++11' -c opt
 	bazel build //tensorflow/lite/c:libtensorflowlite_c.so --config=$1 -c opt
-	bazel build //tensorflow/lite/delegates/gpu:libtensorflowlite_gpu_gl.so -c opt --config $1 --copt -Os --copt -DTFLITE_GPU_BINARY_RELEASE --copt -s --strip always
+	bazel build //tensorflow/lite/delegates/gpu:libtensorflowlite_gpu_delegate.so -c opt --config $1 --copt -Os --copt -DTFLITE_GPU_BINARY_RELEASE --copt -s --strip always
 
-	mkdir -p $DIST_DIR/libs/$1
+	mkdir -p $DIST_DIR/libs/android/$2
 
-	cp bazel-bin/tensorflow/lite/libtensorflowlite.so $DIST_DIR/libs/$1/
-	cp bazel-bin/tensorflow/lite/c/libtensorflowlite_c.so $DIST_DIR/libs/$1/
-	cp bazel-bin/tensorflow/lite/delegates/gpu/libtensorflowlite_gpu_gl.so $DIST_DIR/libs/$1/
+	cp bazel-bin/tensorflow/lite/libtensorflowlite.so $DIST_DIR/libs/android/$2/
+	cp bazel-bin/tensorflow/lite/c/libtensorflowlite_c.so $DIST_DIR/libs/android/$2/
+	cp bazel-bin/tensorflow/lite/delegates/gpu/libtensorflowlite_gpu_delegate.so $DIST_DIR/libs/android/$2/
 }
 
+# The order of these two should match
 ARCHS=("android_arm64" "android_arm" "android_x86_64" "android_x86")
+ABIS=("arm64-v8a" "armeabi-v7a" "x86_64" "x86")
+
 DIST_DIR=`dirname ${BASH_SOURCE[0]}`
 DIST_DIR=`realpath $DIST_DIR`
 TF_DIR=`realpath $1`
@@ -93,10 +96,6 @@ bazel clean
 downloadDeps
 collectHeaders
 
-for arch in ${ARCHS[@]}; do
-	buildArch $arch
+for i in ${!ARCHS[@]}; do
+	buildArch ${ARCHS[$i]} ${ABIS[$i]}
 done
-
-
-
-
