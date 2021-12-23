@@ -27,7 +27,6 @@ Then to build the C library, from git bash:
 cd [tensorflow-root-repo]
 git checkot [wanted tag]
 python configure.py
-./tensorflow/lite/tools/make/download_dependencies.sh
 bazel build //tensorflow/lite/c:tensorflowlite_c.dll -c opt
 ```
 
