@@ -33,12 +33,9 @@ function collectHeaders() {
 	tar xvf headers.tar -C include/tensorflow
 	rm headers.tar
 
-	log "Copy absl headers"
-	cp -R include/tensorflow/lite/tools/make/downloads/absl/absl include/
-
 	log "Copy flatbuffers headers..."
 	mkdir -p include/flatbuffers
-	cp $TF_DIR/tensorflow/lite/tools/make/downloads/flatbuffers/include/flatbuffers/* include/flatbuffers/
+	cp $TF_DIR/bazel-tensorflow/external/flatbuffers/include/flatbuffers/* include/flatbuffers/
 }
 
 function buildArch() {
@@ -93,9 +90,9 @@ git checkout $BRANCH
 log "bazel clean"
 bazel clean
 
-downloadDeps
-collectHeaders
-
 for i in ${!ARCHS[@]}; do
 	buildArch ${ARCHS[$i]} ${ABIS[$i]}
 done
+
+collectHeaders
+
