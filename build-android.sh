@@ -1,7 +1,9 @@
 set -e
 
 function log() {
-	echo "-->> $1"
+	echo "-------------"
+	echo "----->>> $1"
+	echo "-------------"
 }
 
 function rmdir() {
@@ -9,12 +11,6 @@ function rmdir() {
 		log "Removing folder $1"
 		rm -rf $1
 	fi
-}
-
-function downloadDeps() {
-	log "Download tflite dependencies"
-	cd $TF_DIR
-	./tensorflow/lite/tools/make/download_dependencies.sh
 }
 
 function collectHeaders() {
@@ -32,23 +28,17 @@ function collectHeaders() {
 	mkdir -p include/tensorflow
 	tar xvf headers.tar -C include/tensorflow
 	rm headers.tar
-
-	log "Copy flatbuffers headers..."
-	mkdir -p include/flatbuffers
-	cp $TF_DIR/bazel-tensorflow/external/flatbuffers/include/flatbuffers/* include/flatbuffers/
 }
 
 function buildArch() {
 	log "Building for $1 --> $2"
 	cd $TF_DIR
 
-	bazel build //tensorflow/lite:libtensorflowlite.so --config=$1 --cxxopt='--std=c++11' -c opt
 	bazel build //tensorflow/lite/c:libtensorflowlite_c.so --config=$1 -c opt
 	bazel build //tensorflow/lite/delegates/gpu:libtensorflowlite_gpu_delegate.so -c opt --config $1 --copt -Os --copt -DTFLITE_GPU_BINARY_RELEASE --copt -s --strip always
 
 	mkdir -p $DIST_DIR/libs/android/$2
 
-	cp bazel-bin/tensorflow/lite/libtensorflowlite.so $DIST_DIR/libs/android/$2/
 	cp bazel-bin/tensorflow/lite/c/libtensorflowlite_c.so $DIST_DIR/libs/android/$2/
 	cp bazel-bin/tensorflow/lite/delegates/gpu/libtensorflowlite_gpu_delegate.so $DIST_DIR/libs/android/$2/
 }
@@ -75,10 +65,8 @@ fi
 cd $DIST_DIR
 log "clean local dist"
 rmdir include
-for arch in ${ARCHS[@]}; do
-	rmdir libs/$arch
-done
-mkdir -p libs
+rmdir libs/android
+mkdir -p libs/android
 
 cd $TF_DIR
 log "Update repo"
