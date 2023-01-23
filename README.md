@@ -9,7 +9,6 @@ The release zip contains a `include` folders with all required headers, and `lib
 
 ## Android
 Has 3 dynamic libs:
-1. `libtensorflowlite.so` - C++ library
 1. `libtensorflowlite_c.so` - C library
 1. `libtensorflowlite_gpu_delegate.so` - The C++ GPU delegate library
 
