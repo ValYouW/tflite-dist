@@ -1,5 +1,5 @@
 # tflite-dist
-As of today there is no pre-build distribution of TensorFlow Lite C/C++ libraries and headers, this repository is sort of a distribution that can be used in order to use TF lite in C/C++ on mobile.
+As of today there is no pre-build distribution of TensorFlow Lite C libraries and headers, this repository is sort of a distribution that can be used in order to use TF lite in C on mobile.
 
 # Download
 You can find the distribution zip under [releases](https://github.com/ValYouW/tflite-dist/releases)
@@ -8,7 +8,7 @@ You can find the distribution zip under [releases](https://github.com/ValYouW/tf
 The release zip contains a `include` folders with all required headers, and `libs` folder with libraries for Android, iOS and Windows. Not all platform has the same libraries though...
 
 ## Android
-Has 3 dynamic libs:
+Has 2 dynamic libs:
 1. `libtensorflowlite_c.so` - C library
 1. `libtensorflowlite_gpu_delegate.so` - The C++ GPU delegate library
 
