@@ -10,6 +10,7 @@ The script will build the C lib and the GPU delegate.
 This script will also gather all the `include` files for `tflite-dist` (include files are the same for all platforms).
 
 The script has 2 arguments: path to the tensorflow folder and the tensorflow tag/commit to checkout to.
+
 For example:
 ```sh
 ./build-android.sh ~/MyProjects/tensorflow v2.14.0
