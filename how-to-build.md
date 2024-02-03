@@ -29,7 +29,9 @@ bazel build --config=ios_fat -c opt \
 Building for windows requires a machine with Python, Numpy and a supported version of Bazel,
 the supported version can be found under in the tensorflow repository under `.bazelversion` file.
 
-Then to build the C library, from git bash:
+> IMPORTANT! If you are using VS 2022 the mnimum supported Bazel version is 6.3.0, so although TF v2.14.0 requires Bazel 6.1.0 I was able to build with Bazel 6.3.0
+
+To build the C library, run the following command from Git bash **with admin privileges**:
 ```
 cd [tensorflow-root-repo]
 git checkot [wanted tag]
